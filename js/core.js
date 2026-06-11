@@ -489,6 +489,9 @@ const loadData = async () => {
         try { const ce = await localforage.getItem(getStorageKey('customEmojis')); if (ce && Array.isArray(ce)) customEmojis = ce; } catch(e) {}
         if (savedTransferData) transferData = savedTransferData;
         window._customReplies = customReplies;
+        window._stickerLibrary = stickerLibrary;
+        window._kaomojiLibrary = kaomojiLibrary;
+        window._customEmojis = customEmojis;
         window._CONSTANTS = CONSTANTS;
 
         // 将头像数据保存到 settings，供 Home 页同步使用
@@ -516,12 +519,12 @@ const loadData = async () => {
         displayedMessageCount = HISTORY_BATCH_SIZE;
         
         setTimeout(() => {
-            applyAllAvatarFrames();
-            manageAutoSendTimer();
-            manageMoyuAutoGenerateTimer();
-            manageEnvelopeAutoSendTimer();
-            checkEnvelopeStatus();
-            updateUI();
+            if (typeof applyAllAvatarFrames === 'function') applyAllAvatarFrames();
+            if (typeof manageAutoSendTimer === 'function') manageAutoSendTimer();
+            if (typeof manageMoyuAutoGenerateTimer === 'function') manageMoyuAutoGenerateTimer();
+            if (typeof manageEnvelopeAutoSendTimer === 'function') manageEnvelopeAutoSendTimer();
+            if (typeof checkEnvelopeStatus === 'function') checkEnvelopeStatus();
+            if (typeof updateUI === 'function') updateUI();
             if (settings.customBubbleCss) {
                 try { applyCustomBubbleCss(settings.customBubbleCss); } catch(e) {}
             }
@@ -1458,6 +1461,9 @@ window.openMoyuFromNotification = function () {
 
             renderMessages();
         };
+
+        // 暴露 updateUI 到全局，供 home.js 等模块调用
+        window.updateUI = updateUI;
 
         const updateAvatar = (element, src) => {
             if (src) element.innerHTML = `<img src="${src}" alt="avatar">`; else element.innerHTML = `<i class="fas fa-user"></i>`;

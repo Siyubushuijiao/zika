@@ -826,9 +826,19 @@ function renderFavorites() {
             month: '2-digit', day: '2-digit',
             hour: '2-digit', minute: '2-digit'
         }) : '';
-        const content = msg.text
-            ? msg.text.replace(/</g, '&lt;').replace(/>/g, '&gt;')
-            : (msg.image ? `<img src="${msg.image}" style="max-width:100%;max-height:180px;border-radius:8px;display:block;margin-top:4px;cursor:pointer;" onclick="if(typeof viewImage==='function')viewImage('${msg.image.replace(/'/g,'\\\'')}')" loading="lazy">` : '');
+        let content = '';
+        if (msg.type === 'share' && msg.shareData) {
+            content = `[分享商品：]${msg.shareData.name || ''}`;
+        } else if (msg.type === 'pay-request' && msg.shareData) {
+            content = `[分享商品：]${msg.shareData.name || ''}`;
+        } else if (msg.type === 'red-packet' && msg.redPacket) {
+            const amount = msg.redPacket.amount || 0;
+            content = `[红包信息:]¥${amount}`;
+        } else if (msg.text) {
+            content = msg.text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        } else if (msg.image) {
+            content = `<img src="${msg.image}" style="max-width:100%;max-height:180px;border-radius:8px;display:block;margin-top:4px;cursor:pointer;" onclick="if(typeof viewImage==='function')viewImage('${msg.image.replace(/'/g,'\\\'')}')" loading="lazy">`;
+        }
         const avatarEl = isUser
             ? (typeof DOMElements !== 'undefined' ? DOMElements.me.avatar : null)
             : (typeof DOMElements !== 'undefined' ? DOMElements.partner.avatar : null);

@@ -185,6 +185,16 @@
         if (!flags.inclCustom) p.push('customReplies', 'customPokes', 'customStatuses', 'customMottos', 'customIntros', 'customEmojis', 'customReplyGroups', 'customPokeGroups', 'customStatusGroups');
         if (!flags.inclThemes) p.push('customThemes', 'themeSchemes');
         if (!flags.inclDg) p.push('dg_custom_data', 'dg_status_pool', 'weekly_fortune', 'daily_fortune', 'customWeather_');
+        // 新增模块
+        if (!flags.inclMoyu) p.push('moyuRecords', 'currentMoyuRecord', 'moyuWorkSession');
+        if (!flags.inclShop) p.push('shop_balance', 'shop_searchHistory', 'shop_giftCabinet');
+        if (!flags.inclMoments) p.push('moments_data', 'moments_visitor_records', 'moments_friends', 'moments_reply_speed', 'moments_reply_count_min', 'moments_reply_count_max', 'moments_friend_like', 'moments_cover');
+        if (!flags.inclMap) p.push('_mapData');
+        if (!flags.inclTaPhone) p.push('ta_phone_collections');
+        if (!flags.inclPet) p.push('petGameState', 'pixelPetGame');
+        if (!flags.inclDiary) p.push('diaryTodos', 'diaryHabits', 'diaryHabitRecords', 'diaryPeriodRecords', 'diaryAnniversaries', 'diaryTodoCategories');
+        if (!flags.inclAccounting) p.push('accountingRecords', 'accountingLabels');
+        if (!flags.inclEnvelope) p.push('envelopeData');
         return p;
     }
 
@@ -201,7 +211,10 @@
     async function buildBackupPayload(flags) {
         flags = flags || {
             inclMsgs: true, inclSet: true, inclCustom: true,
-            inclThemes: true, inclDg: true, inclStickers: false
+            inclThemes: true, inclDg: true, inclStickers: false,
+            inclMoyu: true, inclShop: true, inclMoments: true,
+            inclMap: true, inclTaPhone: true, inclPet: true,
+            inclDiary: true, inclAccounting: true, inclEnvelope: true
         };
         var lfData = {};
         var keys = await localforage.keys();

@@ -202,6 +202,8 @@ const stickerInput = document.getElementById('sticker-file-input');
                         try {
                             const base64 = await optimizeImage(file, 300, 0.8);
                             stickerLibrary.push(base64);
+                            // 同步更新全局变量
+                            window._stickerLibrary = stickerLibrary;
                             successCount++;
                         } catch (err) {
                             console.error(err);

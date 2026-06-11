@@ -4011,6 +4011,28 @@ html[data-theme="dark"] .settings-section-title {
         transform: translateX(-50%) translateY(-20px);
     }
 }
+
+/* TA移动消息卡片通知动画 */
+@keyframes taNotifySlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+@keyframes taNotifySlideOut {
+    from {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+}
 .notification i {
     font-size: 14px;
     width: 22px;
